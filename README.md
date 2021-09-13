@@ -6,3 +6,8 @@ To use, place the .JSON files you want parsed inside an "inputs" directory, and 
 `python reader.py`
 
 **If a file is *not* properly formatted as a JSON file, this code will not work!**
+
+## Known issues
+- Doesn't account for pathing or choices
+- May miss certain types of flavor text
+- Output could use some retooling in formatting
