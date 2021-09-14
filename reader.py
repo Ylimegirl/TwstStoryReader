@@ -32,9 +32,10 @@ for item in files:
 	if os.path.exists(newname):#deletes _parsed file if it exists
 		os.remove(newname)
 	new_file = open(newname, "a", encoding="utf-8")
-	new_file.write("Label\tContent\n---------------------------------------------")
+	new_file.write("TwstStoryReader by Ylimegirl v0.3.0\nhttps://github.com/Ylimegirl/TwstStoryReader")
 	for group in dict:
 		if group.startswith("group"):
+			new_file.write("\n---------------------------------------------\nGROUP\t" + group)
 			for x in dict[group]:
 				for y, z in x.items(): #i don't know if there's a way to do this without three goddamn levels of nesting no. twst's file formatting sucks
 					if y == "serif" and "text" in z.keys() and "speaker" in z.keys():# handles main dialogue (serifs)
@@ -45,6 +46,11 @@ for item in files:
 							new_file.write("\n" + z["speaker"]["text"] + "\t" + re.sub("\n", "\n\t", z["text"]))
 					elif y == "serif" and not "text" in z.keys(): # skips serifs without text
 						pass
+					elif y == "choice": # handles choices
+						new_file.write("\nCHOICE\t1: " + re.sub("\n", "\n\t", z[0]["text"]) + " (GOTO: " + z[0]["goTo"] + ")")
+						new_file.write("\nCHOICE\t2: " + re.sub("\n", "\n\t", z[1]["text"]) + " (GOTO: " + z[1]["goTo"] + ")")
+					elif y == "goTo":
+						new_file.write("\nGOTO\t" + z["goTo"]) # handles pathing
 					elif y == "title" and "textWhite" in z.keys() and "textGold" in z.keys(): # handles titles
 						if "personal" in z.keys(): # handles titles for personal stories
 							new_file.write("\nTITLE\t" + z["personal"]["rarity"] + " " + z["textGold"] + "\n\t" + z["personal"]["anotherName"] + ": " + z["textWhite"])
@@ -66,7 +72,7 @@ for item in files:
 						new_file.write("\n" + z["speaker"] + "\t" + re.sub("\n", "\n\t", z["text"]))
 					elif y == "balloon" and not "text" in z.keys(): # skips balloons without text
 						pass
-					elif y == "live2d" or y == "moveCamera" or y == "systemUI" or y == "run" or y == "bgm" or y == "advBgOperator" or y == "touch" or y == "wait" or y == "zoomCamera" or y == "se" or y == "curtain" or y == "spine" or y == "spineCharacter" or y == "sd" or y == "spfx" or y == "shakeCamera": # skips a bunch of boring animation/visual logicistical code
+					elif y == "live2d" or y == "moveCamera" or y == "systemUI" or y == "run" or y == "bgm" or y == "advBgOperator" or y == "touch" or y == "wait" or y == "zoomCamera" or y == "se" or y == "curtain" or y == "spine" or y == "spineCharacter" or y == "sd" or y == "spfx" or y == "shakeCamera" or y == "voice" or y == "transition": # skips a bunch of boring animation/visual logicistical code
 						pass
 					else: # for debugging mostly and to catch types i missed
 						new_file.write("\n" + y + "\t(no code to handle this type of object yet, sorry! --Ylime)")
