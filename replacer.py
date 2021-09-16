@@ -10,15 +10,18 @@ def nameTrans(string):
 	for trans in misc_ref:
 		string = re.sub(trans[0] + "寮生(\S*)", trans[1] + " Student \g<1>", string)
 		string = re.sub(trans[0] + "(\S*)", trans[1] + " \g<1>", string)
-		string = string.replace(trans[0], trans[1])
 	string = string.replace("・", "/")
-	string = unicodedata.normalize("NFKC", string)
+	string = removeCR(string)
+	string = unicodedata.normalize("NFKC", string) # normalizes fullwidth alphanumeric etc. characters to "half-width"
 	return string
 
-def replaceNewLine(string):
+def replaceNewLine(string): # formats newlines in dialogue strings to be indented
 	return string.replace("\n", "\n\t")
 
 def formatDialogue(string):
 	string = string.replace("[HERO_NAME]", "ユウ")
-	string = re.sub("\r(\n|$)", "", string) # removes stray carriage returns?? why are they here??
+	string = removeCR(string)
 	return replaceNewLine(string)
+
+def removeCR(string): # removes stray carriage returns?? why are they here?? hello??
+	return re.sub("\r(\n|$)", "\g<1>", string)
