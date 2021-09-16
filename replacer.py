@@ -20,4 +20,5 @@ def replaceNewLine(string):
 
 def formatDialogue(string):
 	string = string.replace("[HERO_NAME]", "ユウ")
+	string = re.sub("\r(\n|$)", "", string) # removes stray carriage returns?? why are they here??
 	return replaceNewLine(string)
