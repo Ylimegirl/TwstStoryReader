@@ -11,6 +11,7 @@ if not os.path.exists("outputs"):
 	os.mkdir("outputs")
 
 files = os.listdir("inputs")
+verNum = "0.3.3"
 
 print("Parsing files...")
 
@@ -109,7 +110,7 @@ for item in files:
 			break
 		else:
 			new_file.write("(no code to handle this type of JSON file yet, sorry! --Ylime)\n")
-	new_file.write("---------------------------------------------\nTwstStoryReader v0.3.1 by Ylimegirl\nhttps://github.com/Ylimegirl/TwstStoryReader")
+	new_file.write("---------------------------------------------\nTwstStoryReader v" + verNum + " by Ylimegirl\nhttps://github.com/Ylimegirl/TwstStoryReader")
 	new_file.close()
 	print("> Parsed " + item)
 
