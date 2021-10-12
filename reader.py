@@ -11,7 +11,7 @@ if not os.path.exists("outputs"):
 	os.mkdir("outputs")
 
 files = os.listdir("inputs")
-verNum = "0.5.0"
+verNum = "0.6.0" # Update this with new releases!!!
 
 
 print("Parsing files...")
@@ -167,8 +167,12 @@ for item in files:
 						new_file.write(y + "\t(no code to handle this type of object yet, sorry! --Ylime)\n")
 		
 		
-		elif group.startswith("word") or group.startswith("w"): # this applies to both the intro text and also rhythmics. yes <3 also sometimes the groups start with "w" and sometimes with "word_" idk
+		elif group.startswith("word") or group.startswith("w") or group.startswith("cut") or group.startswith("c") or group.startswith("motion"): # this applies to both the intro text and also rhythmics. yes <3
+			groupPrinted = False; 
 			for x in dict[group]:
+				if(groupPrinted == False and ("balloon" in x.keys() or "narration" in x.keys())):
+					new_file.write("[" + group + "]\n");
+					groupPrinted = True;
 				for y, z in x.items():
 					if y == "balloon":
 						if "text" in z.keys() and "targetId" in z.keys():
@@ -182,13 +186,11 @@ for item in files:
 						elif not "text" in z.keys():
 							pass
 					
-					elif y == "voice" or y == "voiceWait" or y =="wait":
+					elif y == "voice" or y == "voiceWait" or y == "wait" or y == "spineCharacter" or y == "moveCamera" or y == "zoomCamera" or y == "emotion" or y == "spfxTriggerKicker" or y == "spfxTargetPointFollower" or y == "spine":
 						pass
 					
 					else:
 						new_file.write(y + "\t" + str(z) + "(no code to handle this type of object yet, sorry! --Ylime)\n")
-		elif group.startswith("motion") or group.startswith("c"): # skips past rhythmic animations in dialogue cutscenes
-			pass
 		
 		elif group.startswith("initialize"): # skips past rhythmic animations
 			new_file.write("(no dialogue in this type of JSON object!)\n")
