@@ -1,8 +1,6 @@
 import os
 import json
-from replacer import nameTrans
-from replacer import formatDialogue
-from replacer import replaceNewLine
+from replacer import nameTrans, formatDialogue, replaceNewLine
 from pretty import prettyJSON
 
 if not os.path.exists("inputs"):
@@ -11,7 +9,7 @@ if not os.path.exists("outputs"):
 	os.mkdir("outputs")
 
 files = os.listdir("inputs")
-verNum = "0.6.0" # Update this with new releases!!!
+verNum = "0.6.1" # Update this with new releases!!!
 
 
 print("Parsing files...")
