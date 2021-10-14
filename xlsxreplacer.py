@@ -15,13 +15,9 @@ def nameTrans(string):
 	string = unicodedata.normalize("NFKC", string) # normalizes fullwidth alphanumeric etc. characters to "half-width"
 	return string
 
-def replaceNewLine(string): # formats newlines in dialogue strings to be indented
-	return string.replace("\n", "\n\t")
-
 def formatDialogue(string):
 	string = string.replace("[HERO_NAME]", "ユウ")
-	string = removeCR(string)
-	return replaceNewLine(string)
+	return removeCR(string)
 
 def removeCR(string): # removes stray carriage returns?? why are they here?? hello??
 	return re.sub("\r(\n|$)", "\g<1>", string)

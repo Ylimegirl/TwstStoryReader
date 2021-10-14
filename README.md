@@ -3,10 +3,10 @@ Inspired by [050644zf's ArknightsStoryTextReader](https://github.com/050644zf/Ar
 
 To use, place the .JSON files you want parsed inside an "inputs" directory, and then run in the command line:
 
-`python reader.py`
+`python xlsxreader.py`
 
 **If a file is *not* properly formatted as a JSON file, this code will not work!**
 
 ## Known issues
 - May miss certain types of flavor text
-- Output could use some retooling in formatting
+- xlsx outputs may miss content the txt outputs include
