@@ -1,5 +1,4 @@
-import os
-import json
+import os, json
 from replacer import nameTrans, formatDialogue, replaceNewLine
 from pretty import prettyJSON
 
@@ -9,7 +8,7 @@ if not os.path.exists("outputs"):
 	os.mkdir("outputs")
 
 files = os.listdir("inputs")
-verNum = "1.0.0" # Update this with new releases!!!
+verNum = "1.0.1" # Update this with new releases!!!
 
 
 print("Parsing files...")
@@ -67,17 +66,17 @@ for item in files:
 							new_file.write("[GOTO]\t" + z["goTo"] + "\n") # handles pathing
 						
 						elif y == "title" and "textWhite" in z.keys() and "textGold" in z.keys(): # handles titles
-							if "episode" in z.keys(): # handles titles for episodes
+							if "episode" in z.keys() and "storyNum" in z["episode"].keys(): # handles titles for episodes
 								new_file.write("[TITLE]\tEpisode " + z["episode"]["storyNum"] + ": " + z["textWhite"] + "\n\t" + z["textGold"] + "\n")
-							elif "prologue" in z.keys(): # handles titles for the prologue
+							elif "prologue" in z.keys() and "storyNum" in z["prologue"].keys(): # handles titles for the prologue
 								new_file.write("[TITLE]\tPrologue " + z["prologue"]["storyNum"] + ": " + z["textWhite"] + "\n\t" + z["textGold"] + "\n")
-							elif "eventEpisode" in z.keys(): # handles titles for events
+							elif "eventEpisode" in z.keys() and "storyNum" in z["eventEpisode"].keys(): # handles titles for events
 								new_file.write("[TITLE]\tEvent Episode " + z["eventEpisode"]["storyNum"] + ": " + z["textWhite"] + "\n\t" + z["textGold"] + "\n")
-							elif "eventTitle" in z.keys(): # ...also handles titles for events
+							elif "eventTitle" in z.keys() and "storyNum" in z["eventTitle"].keys(): # ...also handles titles for events
 								new_file.write("[TITLE]\tEvent Episode " + z["eventTitle"]["storyNum"] + ": " + z["textWhite"] + "\n\t" + z["textGold"] + "\n")
-							elif "personal" in z.keys(): # handles titles for personal stories
+							elif "personal" in z.keys() and "rarity" in z["personal"].keys() and "anotherName" in z["personal"].keys(): # handles titles for personal stories
 								new_file.write("[TITLE]\t" + z["textGold"] + " " + z["personal"]["rarity"] + ": " + z["personal"]["anotherName"] + "\n\t" + z["textWhite"] + "\n")
-							elif "talk" in z.keys(): # handles titles for chats
+							elif "talk" in z.keys() and "text" in z["talk"].keys(): # handles titles for chats
 								new_file.write("[TITLE]\t" + z["textGold"] + " Chat: " + z["talk"]["text"] + "\n\t" + z["textWhite"] + "\n")
 							else: # handles other titles
 								new_file.write("[TITLE]\t" + z["textWhite"] + "\n\t" + z["textGold"] + "\n")
