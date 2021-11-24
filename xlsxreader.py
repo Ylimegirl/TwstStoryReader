@@ -1,6 +1,4 @@
-import os
-import json
-import openpyxl
+import os, json, openpyxl
 from openpyxl.styles import Alignment, Font, Border, Side
 from xlsxreplacer import nameTrans, formatDialogue
 from pretty import prettyJSON
@@ -11,7 +9,7 @@ if not os.path.exists("outputs"):
 	os.mkdir("outputs")
 
 files = os.listdir("inputs")
-verNum = "1.0.0" # Update this with new releases!!!
+verNum = "1.0.1" # Update this with new releases!!!
 
 
 print("Parsing files...")
@@ -70,17 +68,17 @@ for item in files:
 							sheet.append(["[GOTO]", z["goTo"]]) # handles pathing
 						
 						elif y == "title" and "textWhite" in z.keys() and "textGold" in z.keys(): # handles titles
-							if "episode" in z.keys(): # handles titles for episodes
+							if "episode" in z.keys() and "storyNum" in z["episode"].keys(): # handles titles for episodes
 								sheet.append(["[TITLE]", "Episode " + z["episode"]["storyNum"] + ": " + z["textWhite"] + "\n" + z["textGold"]])
-							elif "prologue" in z.keys(): # handles titles for the prologue
+							elif "prologue" in z.keys() and "storyNum" in z["prologue"].keys(): # handles titles for the prologue
 								sheet.append(["[TITLE]", "Prologue " + z["prologue"]["storyNum"] + ": " + z["textWhite"] + "\n" + z["textGold"]])
-							elif "eventEpisode" in z.keys(): # handles titles for events
+							elif "eventEpisode" in z.keys() and "storyNum" in z["eventEpisode"].keys(): # handles titles for events
 								sheet.append(["[TITLE]", "Event Episode " + z["eventEpisode"]["storyNum"] + ": " + z["textWhite"] + "\n" + z["textGold"]])
-							elif "eventTitle" in z.keys(): # ...also handles titles for events
+							elif "eventTitle" in z.keys() and "storyNum" in z["eventTitle"].keys(): # ...also handles titles for events
 								sheet.append(["[TITLE]", "Event Episode " + z["eventTitle"]["storyNum"] + ": " + z["textWhite"] + "\n" + z["textGold"]])
-							elif "personal" in z.keys(): # handles titles for personal stories
+							elif "personal" in z.keys() and "rarity" in z["personal"].keys() and "anotherName" in z["personal"].keys(): # handles titles for personal stories
 								sheet.append(["[TITLE]", z["textGold"] + " " + z["personal"]["rarity"] + ": " + z["personal"]["anotherName"] + "\n" + z["textWhite"]])
-							elif "talk" in z.keys(): # handles titles for chats
+							elif "talk" in z.keys() and "text" in z["talk"].keys(): # handles titles for chats
 								sheet.append(["[TITLE]", z["textGold"] + " Chat: " + z["talk"]["text"] + "\n" + z["textWhite"]])
 							else: # handles other titles
 								sheet.append(["[TITLE]", z["textWhite"] + "\n" + z["textGold"]])
