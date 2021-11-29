@@ -9,7 +9,7 @@ if not os.path.exists("outputs"):
 	os.mkdir("outputs")
 
 files = os.listdir("inputs")
-verNum = "1.0.1" # Update this with new releases!!!
+verNum = "1.0.2" # Update this with new releases!!!
 
 
 print("Parsing files...")
@@ -42,7 +42,7 @@ for item in files:
 				sheet.append([group, dict[group]["serif"].replace("@", "\n")])#voice line jasons are so simple. bless
 			
 			
-			elif group.startswith("group"):
+			elif group.startswith("group") or group.startswith("delete"):
 				sheet.append(["GROUP", group])
 				for x in dict[group]:
 					for y, z in x.items(): #i don't know if there's a way to do this without three goddamn levels of nesting no. twst's file formatting sucks
@@ -146,6 +146,8 @@ for item in files:
 								sheet.append(["[MIRROR]", "Movie " + str(z["mirrorId"])])
 							else:
 								pass
+						elif y == "runMovieView" and "queueId" in z.keys():
+							sheet.append(["[MOVIE]", "GOTO: " + z["queueId"]])
 						
 						elif y == "blot":
 							if "dormitoryId" in z.keys() and "animation" in z.keys() and "phase" in z["animation"].keys(): # handles (over)blot animations
