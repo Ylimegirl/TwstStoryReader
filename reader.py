@@ -8,7 +8,7 @@ if not os.path.exists("outputs"):
 	os.mkdir("outputs")
 
 files = os.listdir("inputs")
-verNum = "1.0.2" # Update this with new releases!!!
+verNum = "1.1.0" # Update this with new releases!!!
 
 
 print("Parsing files...")
@@ -172,29 +172,32 @@ for item in files:
 			
 			
 			elif group.startswith("word") or group.startswith("w") or group.startswith("cut") or group.startswith("c") or group.startswith("motion"): # this applies to both the intro text and also rhythmics. yes <3
-				groupPrinted = False; 
-				for x in dict[group]:
-					if(groupPrinted == False and ("balloon" in x.keys() or "narration" in x.keys())):
-						new_file.write("[" + group + "]\n");
-						groupPrinted = True;
-					for y, z in x.items():
-						if y == "balloon":
-							if "text" in z.keys() and "targetId" in z.keys():
-								new_file.write(z["targetId"] + "\t" + formatDialogue(z["text"]) + "\n")
-							elif "delete" in z.keys() and z["delete"]:
+				if group.startswith("create"):
+					pass
+				else:
+					groupPrinted = False;
+					for x in dict[group]:
+						if(groupPrinted == False and ("balloon" in x.keys() or "narration" in x.keys())):
+							new_file.write("[" + group + "]\n");
+							groupPrinted = True;
+						for y, z in x.items():
+							if y == "balloon":
+								if "text" in z.keys() and "targetId" in z.keys():
+									new_file.write(z["targetId"] + "\t" + formatDialogue(z["text"]) + "\n")
+								elif "delete" in z.keys() and z["delete"]:
+									pass
+							
+							elif y == "narration":
+								if "text" in z.keys():
+									new_file.write("[NARRATION]\t" + replaceNewLine(z["text"]) + "\n")
+								elif not "text" in z.keys():
+									pass
+							
+							elif y == "voice" or y == "voiceWait" or y == "wait" or y == "spineCharacter" or y == "moveCamera" or y == "zoomCamera" or y == "emotion" or y == "spfxTriggerKicker" or y == "spfxTargetPointFollower" or y == "spine":
 								pass
-						
-						elif y == "narration":
-							if "text" in z.keys():
-								new_file.write("[NARRATION]\t" + replaceNewLine(z["text"]) + "\n")
-							elif not "text" in z.keys():
-								pass
-						
-						elif y == "voice" or y == "voiceWait" or y == "wait" or y == "spineCharacter" or y == "moveCamera" or y == "zoomCamera" or y == "emotion" or y == "spfxTriggerKicker" or y == "spfxTargetPointFollower" or y == "spine":
-							pass
-						
-						else:
-							new_file.write(y + "\t" + str(z) + "(no code to handle this type of object yet, sorry! --Ylime)\n")
+							
+							else:
+								new_file.write(y + "\t" + str(z) + "(no code to handle this type of object yet, sorry! --Ylime)\n")
 			
 			elif group.startswith("initialize"): # skips past rhythmic animations
 				new_file.write("(no dialogue in this type of JSON object!)\n")

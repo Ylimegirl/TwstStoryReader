@@ -1,5 +1,4 @@
-import re
-import unicodedata
+import re, unicodedata
 
 name_ref = [["トレイン", "Trein"], ["リドル", "Riddle"], ["エース", "Ace"], ["デュース", "Deuce"], ["トレイ", "Trey"], ["ケイト", "Cater"], ["レオナ", "Leona"], ["ラギー", "Ruggie"], ["ジャック", "Jack"], ["アズール", "Azul"], ["ジェイド", "Jade"], ["フロイド", "Floyd"], ["カリム", "Kalim"], ["ジャミル", "Jamil"], ["ヴィル", "Vil"], ["ルーク", "Rook"], ["エペル", "Epel"], ["イデア", "Idia"], ["オルト", "Ortho"], ["マレウス", "Malleus"], ["リリア", "Lilia"], ["シルバー", "Silver"], ["セベク", "Sebek"], ["クロウリー", "Crowley"], ["クルーウェル", "Crewel"], ["バルガス", "Vargas"], ["サム", "Sam"], ["グリム", "Grim"]]
 misc_ref = [["ハーツラビュル", "Heartslabyul"], ["サバナクロー", "Savanaclaw"], ["オクタヴィネル", "Octavinelle"], ["スカラビア", "Scarabia"], ["ポムフィオーレ", "Pomefiore"], ["イグニハイド", "Ignihyde"], ["ディアソムニア", "Diasomnia"], ["ゴースト", "Ghost"], ["男性", "Man"], ["女性", "Woman"]]
@@ -16,7 +15,7 @@ def nameTrans(string):
 	return string
 
 def replaceNewLine(string): # formats newlines in dialogue strings to be indented
-	return string.replace("\n", "\n\t")
+	return removeCR(string.replace("\n", "\n\t"))
 
 def formatDialogue(string):
 	string = string.replace("[HERO_NAME]", "ユウ")
