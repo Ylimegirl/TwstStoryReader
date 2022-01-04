@@ -8,7 +8,7 @@ if not os.path.exists("outputs"):
 	os.mkdir("outputs")
 
 files = os.listdir("inputs")
-verNum = "1.1.0" # Update this with new releases!!!
+verNum = "1.1.1" # Update this with new releases!!!
 
 
 print("Parsing files...")
@@ -40,7 +40,7 @@ for item in files:
 				new_file.write(group + "\t" + replaceNewLine(dict[group]["serif"].replace("@", "\n")) + "\n")#voice line jasons are so simple. bless
 			
 			
-			elif group.startswith("group") or group.startswith("delete"):
+			elif group.startswith("group") or group.startswith("delete") or group.startswith("scene"):
 				new_file.write("---------------------------------------------\n[GROUP]\t" + group + "\n")
 				for x in dict[group]:
 					for y, z in x.items(): #i don't know if there's a way to do this without three goddamn levels of nesting no. twst's file formatting sucks
@@ -146,6 +146,9 @@ for item in files:
 								pass
 						elif y == "runMovieView" and "queueId" in z.keys():
 							new_file.write("[MOVIE]\tGOTO: " + z["queueId"] + "\n")
+						
+						elif y == "reminiscence" and "play" in z.keys() and "path" in z["play"].keys() and "queueId" in z["play"].keys(): #handles uh, reminsiscences
+							new_file.write("[REMIN]\t" + z["play"]["path"][z["play"]["path"].rfind("/")+1:z["play"]["path"].rfind(".")] + ": " + z["play"]["queueId"] + "\n")
 						
 						elif y == "blot":
 							if "dormitoryId" in z.keys() and "animation" in z.keys() and "phase" in z["animation"].keys(): # handles (over)blot animations
