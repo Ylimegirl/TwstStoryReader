@@ -8,7 +8,7 @@ if not os.path.exists("outputs"):
 	os.mkdir("outputs")
 
 files = os.listdir("inputs")
-verNum = "1.1.1" # Update this with new releases!!!
+verNum = "1.2.0" # Update this with new releases!!!
 
 
 print("Parsing files...")
@@ -39,6 +39,9 @@ for item in files:
 			if group.startswith("voice"):
 				new_file.write(group + "\t" + replaceNewLine(dict[group]["serif"].replace("@", "\n")) + "\n")#voice line jasons are so simple. bless
 			
+			elif group.startswith("serifList"):
+				for x in dict[group]:
+					new_file.write(x["serifId"] + "\t" + replaceNewLine(x["serif"].replace("@", "\n")) + "\n")
 			
 			elif group.startswith("group") or group.startswith("delete") or group.startswith("scene"):
 				new_file.write("---------------------------------------------\n[GROUP]\t" + group + "\n")
